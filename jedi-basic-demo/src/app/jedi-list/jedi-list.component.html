@@ -1,0 +1,15 @@
+<h2>Targets list</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group jedis">
+            <li *ngFor="let jedi of jedis" (click)="selectJedi(jedi)" class="list-group-item" [class.active]="selectedJedi==jedi">
+                <i class="fa fa-rebel"></i> {{ jedi.surname | uppercase }} {{ jedi.name }} 
+                <span class="badge badge-danger" *ngIf="jedi.surname == 'Skywalker'">EMPEROR WANTS HIM ALIVE</span>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <app-jedi-detail [jedi]="selectedJedi"></app-jedi-detail>
+    </div>
+</div>

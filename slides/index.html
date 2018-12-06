@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Introduzione ad Angular e TypeScript - DevMarche - Angular and beyond, 7 dicembre 2018</title>
+
+		<meta name="description" content="A tiny introduction to Angular and TypeScript">
+		<meta name="author" content="Defkon1">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/angularandbeyond.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section data-background-color="rgb(3, 169, 244)" data-background-transition="zoom"> 
+					<img class="noborder" width="336" height="356" data-src="assets/angular-logo.svg" alt="Angular logo">
+
+					<h3>Introduzione ad Angular e TypeScript</h3>
+					<p>
+						<small class="hero">Angular and beyond</small> <small>- DevMarche - Ancona, 7 dicembre 2018</small>
+					</p>
+				</section>
+
+				<section data-background="rgb(205, 220, 57)" data-background-transition="zoom">
+					<h2>Hello There!</h2>
+					<img class="noborder" style="float:left" width="150" height="150" data-src="assets/alessio-marinelli.jpg" alt="Alessio Marinelli">
+					<ul id="hello-fragments">
+						<li class="fragment">Alessio Marinelli</li>
+						<li class="fragment">Software Developer @ Antos srl</li>
+						<li class="fragment">Nerd, retrogamer, tech lover e vinyl maniac</li>
+						<li class="fragment">Organizzo eventi DevMarche</li>
+					</ul>
+				</section>
+
+				<section data-background="rgb(96, 125, 139)" data-background-transition="zoom">
+						<h2>Cosa vedremo oggi</h2>
+						<img class="fragment noborder" style="float:left" width="150" height="150" data-src="assets/angular-logo.svg" alt="Angular">
+						<p class="fragment">
+							<br/>Informazioni base su Angular, la sua architettura e i tool fondamentali
+						</p>
+						<img class="fragment noborder" style="float:right" width="150" height="150" data-src="assets/typescript-logo.png" alt="TypeScript">
+						<p class="fragment">
+							<br/>TypeScript, il cugino enterprise di JavaScript
+						</p>
+						<br style="clear:both"/>
+						<p class="fragment hero-orange">
+							... ma vedremo poco codice
+						</p>
+					</section>
+
+				<section data-background-color="#3674bf">
+					<section>
+						<h2>TypeScript</h2>
+						<p class="fragment">TypeScript è un <em>superset</em> di JavaScript</p>
+						<p class="fragment">Aggiunge tipizzazione statica (opzionale), classi, interfacce e tutte le funzionalità di ECMAScript 6</p>
+						<p class="fragment">È un linguaggio compilato object-oriented, pensato per essere robusto e affidabile</p>
+						<p class="fragment">Progettato da Anders Hejlsberg (Microsoft) e rilasciato con licenza Apache 2.0</p>
+					</section>
+					<section>
+						<h2>TypeScript vs JavaScript</h2>
+						<table>
+							<tr class="fragment">
+								<td>Object oriented</td><td>Prototype-based</td>
+							</tr>
+							<tr class="fragment">
+								<td>Strong/Static typing</td><td>Weak/Dynamic typing</td>
+							</tr>
+							<tr class="fragment">
+								<td>Compilato</td><td>Interpretato</td>
+							</tr>
+							<tr class="fragment">
+								<td>Pesante</td><td>Leggero</td>
+							</tr>							
+							<tr class="fragment">
+								<td>.ts ⇨ .js</td><td>.js</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h2>Un semplice esempio (TS)</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+								class Greeter {
+									greeting: string;
+									constructor(message: string) {
+										this.greeting = message;
+									}
+									greet() {
+										return "Hello, " + this.greeting;
+									}
+								}
+								
+								let greeter = new Greeter("world");
+								
+								let button = document.createElement('button');
+								button.textContent = "Say Hello";
+								button.onclick = function() {
+									alert(greeter.greet());
+								}
+								
+								document.body.appendChild(button);
+						</code></pre>
+						<p>www.typescriptlang.org/play/</p>
+					</section>
+					<section>
+						<h2>Un semplice esempio (JS)</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+								var Greeter = /** @class */ (function () {
+									function Greeter(message) {
+										this.greeting = message;
+									}
+									Greeter.prototype.greet = function () {
+										return "Hello, " + this.greeting;
+									};
+									return Greeter;
+								}());
+								var greeter = new Greeter("world");
+								var button = document.createElement('button');
+								button.textContent = "Say Hello";
+								button.onclick = function () {
+									alert(greeter.greet());
+								};
+								document.body.appendChild(button);
+						</code></pre>
+					</section>
+					<section>
+						<h2>Un esempio "stellare" (TS)</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+								class Person {
+									public race: Race = Race.Human;    
+								 	public birthPlanet: string;
+																	
+								 	constructor(public name: string, public surname: string, public sex : Sex) {
+									}
+								}
+								
+								class Jedi extends Person {
+									public readonly alignment: ForceAlignment;
+									public lightswordColor: string;
+								
+									constructor(public name : string, public surname : string, public sex : Sex) {
+										super(name, surname, sex);
+										this.alignment = ForceAlignment.LightSide;
+									}
+								}
+								
+								enum Sex {
+									Unknown,
+									Male,
+									Female
+								}
+								
+								enum ForceAlignment {
+									LightSide,
+									DarkSide
+								}
+								
+								enum Race {
+									Human,
+									Wookie,
+									Ewok,
+									Twilek,
+									Jawa,
+									Zabrak,
+									Droid,
+									MonCalamari
+								}
+								
+								let luke = new Jedi("Luke", "Skywalker", Sex.Male);
+								luke.birthPlanet = "Polis Massa";
+								luke.lightswordColor = "blue";
+								luke.race = Race.Human;
+								
+								let aayla = new Jedi("Aayla", "Secura", Sex.Female);
+								aayla.birthPlanet = "Ryloth";
+								aayla.lightswordColor = "green";
+								aayla.race = Race.Twilek;							
+						</code></pre>
+					</section>
+					<section>
+						<h2>Un esempio "stellare" (JS)</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+								var __extends = (this && this.__extends) || (function () {
+									var extendStatics = function (d, b) {
+										extendStatics = Object.setPrototypeOf ||
+											({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+											function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+										return extendStatics(d, b);
+									}
+									return function (d, b) {
+										extendStatics(d, b);
+										function __() { this.constructor = d; }
+										d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+									};
+								})();
+								var Person = /** @class */ (function () {
+									function Person(name, surname, sex) {
+										this.name = name;
+										this.surname = surname;
+										this.sex = sex;
+										this.race = Race.Human;
+									}
+									return Person;
+								}());
+								var Jedi = /** @class */ (function (_super) {
+									__extends(Jedi, _super);
+									function Jedi(name, surname, sex) {
+										var _this = _super.call(this, name, surname, sex) || this;
+										_this.name = name;
+										_this.surname = surname;
+										_this.sex = sex;
+										_this.alignment = ForceAlignment.LightSide;
+										return _this;
+									}
+									return Jedi;
+								}(Person));
+								var Sex;
+								(function (Sex) {
+									Sex[Sex["Unknown"] = 0] = "Unknown";
+									Sex[Sex["Male"] = 1] = "Male";
+									Sex[Sex["Female"] = 2] = "Female";
+								})(Sex || (Sex = {}));
+								var ForceAlignment;
+								(function (ForceAlignment) {
+									ForceAlignment[ForceAlignment["LightSide"] = 0] = "LightSide";
+									ForceAlignment[ForceAlignment["DarkSide"] = 1] = "DarkSide";
+								})(ForceAlignment || (ForceAlignment = {}));
+								var Race;
+								(function (Race) {
+									Race[Race["Human"] = 0] = "Human";
+									Race[Race["Wookie"] = 1] = "Wookie";
+									Race[Race["Ewok"] = 2] = "Ewok";
+									Race[Race["Twilek"] = 3] = "Twilek";
+									Race[Race["Jawa"] = 4] = "Jawa";
+									Race[Race["Zabrak"] = 5] = "Zabrak";
+									Race[Race["Droid"] = 6] = "Droid";
+									Race[Race["MonCalamari"] = 7] = "MonCalamari";
+								})(Race || (Race = {}));
+								var luke = new Jedi("Luke", "Skywalker", Sex.Male);
+								luke.birthPlanet = "Polis Massa";
+								luke.lightswordColor = "blue";
+								luke.race = Race.Human;
+								var aayla = new Jedi("Aayla", "Secura", Sex.Female);
+								aayla.birthPlanet = "Ryloth";
+								aayla.lightswordColor = "green";
+								aayla.race = Race.Twilek;													
+						</code></pre>
+					</section>
+					<section>
+						<h2>Codice TypeScript</h2>
+						<table>							
+							<tr class="fragment">
+								<td>Codice pulito e leggibile</td>
+							</tr>
+							<tr class="fragment">
+								<td>Più facile da testare e correggere</td>
+							</tr>
+							<tr class="fragment">
+								<td>Più facile da estendere e manutenere</td>
+							</tr>
+							<tr class="fragment">
+								<td>Anche all'interno di un team</td>
+							</tr>							
+							<tr class="fragment">
+								<td>Permette l'impiego di strumenti IDE avanzati</td>
+							</tr>
+							<tr class="fragment" style="background-color:orangered">
+								<td>Perfetto (anche) per grandi progetti</td>
+							</tr>
+						</table>
+					</section>
+				</section>
+				<section data-background-color="rgb(63, 81, 181)" data-background-transition="zoom">
+					<section data-background-color="#c3002f" data-background-transition="zoom">
+						<h2>Angular</h2>
+						<p class="fragment">Angular è una piattaforma open source per lo sviluppo web basata su TypeScript</p>
+						<p class="fragment">Nasce nei laboratori Google nel 2016 come riscrittura completa del framework AngularJS</p>						
+						<p class="fragment">Tecnologia abilitante per lo sviluppo di Single Page Applications</p>
+						<p class="fragment">Rilasciato sotto licenza MIT</p>					
+					</section>
+					<section data-background-transition="zoom">
+						<h2>Framework o piattaforma?</h2>
+						<blockquote class="fragment" cite="https://stackoverflow.com/a/50308856">
+							&ldquo;It's both a platform and a framework.<br/>
+
+							When you use it for web application, you may call it a framework.<br/>							
+							But when you use it for web, iPhone, android or any mobile, you may call it a platform. [...]<br/>
+							
+							So, the platform can be defined as a framework which can be used across multiple systems.&rdquo;
+						</blockquote>
+						<em class="fragment">-Bhojendra Rauniyar stackoverflow.com/a/50308856 </em>
+					</section>
+					<section>
+						<h2>Principi ispiratori</h2>
+						<table>							
+							<tr class="fragment">
+								<td>Modernità</td>
+							</tr>
+							<tr class="fragment">
+								<td>Riduzione della curva di apprendimento</td>
+							</tr>
+							<tr class="fragment">
+								<td>Massima modularità</td>
+							</tr>
+							<tr class="fragment">
+								<td>Alte prestazioni</td>
+							</tr>							
+							<tr class="fragment">
+								<td>Mobile first</td>
+							</tr>
+							<tr class="fragment">
+								<td>Toolchain integrata e completa</td>
+							</tr>
+						</table>
+					</section>
+
+					<section>
+						<h2>Architettura Angular</h2>
+						<p class="fragment">Una app Angular è composta da moduli (chiamati <em>NgModules</em>) che forniscono un contesto di compilazione ad un set di componenti logicamente correlati tra loro.</p>
+						<p class="fragment">Ogni app ha almeno un modulo <em>root</em> e uno o più moduli feature.</p>
+						<p class="fragment">Ogni modulo può utilizzare o esporre funzionalità a altri moduli</p>
+					</section>
+
+					<section>
+						<h2>Moduli</h2>
+						<p class="fragment">Una app Angular è composta da moduli (chiamati <em>NgModules</em>) che forniscono un contesto di compilazione ad un set di componenti logicamente correlati tra loro.</p>
+						<p class="fragment">Ogni app ha almeno un modulo <em>root</em> e uno o più moduli feature.</p>
+						<p class="fragment">Ogni modulo può utilizzare o esporre funzionalità a altri moduli</p>
+					</section>
+
+					<section>
+						<h2>Modulo Root</h2>
+						<pre><code class="hljs">
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  imports:      [ BrowserModule ],  /* features imported from other modules                        */
+  providers:    [],                 /* creators of services that will be available in the app      */
+  declarations: [ AppComponent ],   /* components, directives and pipes that belong to the module  */
+  exports:      [ AppComponent ],   /* subset of declarations that will be usable by other modules */
+  bootstrap:    [ AppComponent ]    /* the main application view -only for the root NgModule-      */
+})
+export class AppModule { }
+						</code></pre>
+						<p class="fragment">Un NgModule contiene componenti e fornisce loro un contesto di compilazione</p>
+					</section>
+
+					<section>
+						<h2>Componenti</h2>
+						<p class="fragment">Un <em>component</em> è un elemento che controlla una porzione di schermo chiamata <em>view</em></p>
+						<p class="fragment">Un <em>component</em> implementa la logica applicativa e interagisce con la sua rappresentazione grafica (chiamato <em>template</em>) tramite un set di proprietà e metodi</p>
+						<p class="fragment">Definisce di quali servizi ha bisogno e come verrà referenziato in HTML</p>
+					</section>
+	
+					<section>
+						<h2>Un componente stellare</h2>
+						<pre><code class="hljs">@Component({
+	selector:    'app-jedi-list',
+	templateUrl: './jedi-list.component.html',
+	providers:  [ JediService ]
+})
+export class JediListComponent implements OnInit {
+   jedis: Jedi[];
+   selectedJedi: Jedi;
+
+   constructor(private service: JediService) { }
+
+   ngOnInit() {
+      this.jedis = this.service.getJedis();
+   }
+
+   selectJedi(jedi: Jedi) { this.selectedJedi = jedi; }
+}
+						</code></pre>
+						<p class="fragment">HTML: <pre class="fragment" ><code class="hljs"><app-jedi-list></app-jedi-list></code></pre></p>
+					</section>
+
+					<section>
+						<h2>Template</h2>
+						<pre><code class="hljs"><h2>Bounty killers wishlist</h2>
+
+<ul>
+   <li *ngFor="let jedi of jedis" (click)="selectJedi(jedi)">
+      {{ jedi.surname | uppercase }} {{ jedi.name }} 
+      <p *ngIf="jedi.surname == 'Skywalker'"><b>EMPEROR WANTS HIM ALIVE</b></p>
+   </li>
+</ul>
+
+<app-jedi-detail *ngIf="selectedJedi" [jedi]="selectedJedi"></app-jedi-detail>
+						</code></pre>
+						<p class="fragment">Un <em>template</em> è un file che contiene tag HTML, direttive Angular, variabili e metodi in binding con il componente e trasformazioni chiamate <em>pipe</em> </p>
+					</section>
+
+					<section>
+							<h2>Servizi</h2>
+							<pre><code class="hljs">import { Injectable } from '@angular/core';
+import { Jedi } from './jedi';
+import { JEDIS } from './mock-jedis';
+
+@Injectable({ providedIn: 'root' })
+
+export class JediService {
+   private jedis: Jedi[] = [];
+
+   constructor() { }
+
+   getJedis() {
+    this.jedis = JEDIS;					 
+    return this.jedis;
+   }
+}</code></pre>
+						<p class="fragment">Un <em>service</em> è un generico fornitore di funzionalità che permette di scorporare dalla logica contenuta nel componente
+							alcune funzioni specifiche e riusabili</p>
+					</section>
+
+					<section>
+						<h2>WRAP UP</h2>
+						<img class="fragment noborder" src="./assets/angular.io-overview2.png">
+					</section>
+				</section>
+
+				<section data-background-color="rgb(63, 81, 181)" data-background-transition="zoom">
+					<section data-background-color="#c3002f" data-background-transition="zoom">
+						<h2>Tool</h2>
+						<p class="fragment">VS Code + Angular Language Service</p>
+						<p class="fragment">Angular CLI</p>
+						<p class="fragment">Karma (unit testing)</p>
+						<p class="fragment">Protractor (e2e testing)</p>
+						<p class="fragment">Aggiornamenti guidati update.angular.io</p>
+					</section>
+					<section data-background-color="#c3002f" data-background-transition="zoom">
+						<h2>Angular CLI</h2>
+						<p class="fragment">È uno strumento a riga di comando per inizializzare, sviluppare l'architettura e manutenere app Angular</p>
+						<ul>
+							<li class="fragment">ng new myapp</li>
+							<li class="fragment">ng generate [component|service|...]</li>
+							<li class="fragment">ng serve</li>
+							<li class="fragment">ng build</li>
+							<li class="fragment">ng update</li>
+							<li class="fragment">ng ...</li>
+						</ul>
+					</section>
+					<section data-background-color="#c3002f" data-background-transition="zoom">
+						<h2>update.angular.io</h2>
+						<p class="fragment">È una guida online per aiutare il dev ad aggiornare le librerie principali</p>
+						<img class="fragment noborder" src="./assets/angular.io-updateguide.png"/>
+					</section>
+				</section>		
+				
+				<section data-background-color="rgb(3, 169, 244)" data-background-transition="zoom"> 
+
+					<h2>Cosa abbiamo visto oggi?</h2>
+
+					<img class="noborder" width="168" height="178" data-src="assets/angular-logo.svg" alt="Angular logo">
+
+					<ul>
+						<li class="fragment">Cos'è TypeScript e perché è perfetto in ambito enterprise</li>
+						<li class="fragment">Cos'è Angular e quali elementi principali ne compongono l'architettura</li>
+						<li class="fragment">Quali sono i tool principali a disposizione dello sviluppatore Angular</li>
+					</ul>					
+				</section>
+								
+				<section data-background-color="rgb(3, 169, 244)">
+					<h1>Domande?</h1>					
+				</section>
+
+				<section data-background-color="rgb(3, 169, 244)">
+					<h2>Qualche link</h2>
+					<ul>
+						<li>Angular official site: angular.io</li>
+						<li>TypeScript official site: www.typescriptlang.org</li>
+						<li>ECMAScript 6 Features: es6-features.org</li>
+						<li>DevMarche: dev.marche.it/tag/angular</li>
+						<li>Slide e demo: github.com/defkon1</li>
+					</ul>					
+				</section>
+
+				<section data-background-color="rgb(205, 220, 57)">
+					<h1>GRAZIE</h1>					
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

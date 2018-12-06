@@ -1,0 +1,11 @@
+<div *ngIf="jedi" class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ jedi.name }} {{ jedi.surname }} <i *ngIf="jedi.sex==1" class="fa fa-mars"></i><i *ngIf="jedi.sex==2" class="fa fa-venus"></i></h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ getJediSex() }} - {{ getJediRace() }} race</h6>
+    <p class="card-text">
+        <b>Birthplanet:</b> {{ jedi.birthPlanet }}<br/>
+        <b>Lightsaber color:</b> {{ jedi.lightsaberColor }}<br/>
+        <span class="badge badge-danger" *ngIf="jedi.surname == 'Skywalker'">EMPEROR WANTS HIM ALIVE</span>
+    </p>
+  </div>
+</div>
